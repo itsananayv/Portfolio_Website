@@ -13,27 +13,14 @@ try {
   } catch (err) {}
 }
 
-const rawPort = process.env.PORT_PORTFOLIO || process.env.PORT;
-
-if (!rawPort) {
-  throw new Error(
-    "PORT_PORTFOLIO or PORT environment variable is required but was not provided.",
-  );
-}
-
+const rawPort = process.env.PORT_PORTFOLIO || process.env.PORT || "8080";
 const port = Number(rawPort);
 
 if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${rawPort}"`);
 }
 
-const basePath = process.env.BASE_PATH;
-
-if (!basePath) {
-  throw new Error(
-    "BASE_PATH environment variable is required but was not provided.",
-  );
-}
+const basePath = process.env.BASE_PATH || "/";
 
 export default defineConfig({
   base: basePath,
