@@ -4,11 +4,20 @@ import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 
-const rawPort = process.env.PORT;
+// Load environment variables from the workspace root or local directory
+try {
+  process.loadEnvFile(path.resolve(import.meta.dirname, "../../.env"));
+} catch (e) {
+  try {
+    process.loadEnvFile(path.resolve(import.meta.dirname, ".env"));
+  } catch (err) {}
+}
+
+const rawPort = process.env.PORT_PORTFOLIO || process.env.PORT;
 
 if (!rawPort) {
   throw new Error(
-    "PORT environment variable is required but was not provided.",
+    "PORT_PORTFOLIO or PORT environment variable is required but was not provided.",
   );
 }
 

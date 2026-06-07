@@ -1,8 +1,18 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import pg from "pg";
+import path from "path";
 import * as schema from "./schema";
 
 const { Pool } = pg;
+
+// Load environment variables from the workspace root or local directory
+try {
+  process.loadEnvFile(path.resolve(import.meta.dirname, "../../../.env"));
+} catch (e) {
+  try {
+    process.loadEnvFile(path.resolve(import.meta.dirname, "../.env"));
+  } catch (err) {}
+}
 
 if (!process.env.DATABASE_URL) {
   throw new Error(
